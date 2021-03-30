@@ -1,15 +1,24 @@
 """ service to handle user CRUD operations"""
 from datetime import datetime, timedelta
-# import ast
+import ast
 import jwt
 
-from flask import request, jsonify
+from flask import Flask,request, jsonify
 
 from src.entities.user import User
 from src.util.logger import logger
 from src.util.validate_user import UserValidator
 from src.helper.cache_helper import set_token,auth_response
 from src.helper.cache_helper import ACCESS_TOKEN_SECRET_KEY,REFRESH_TOKEN_SECRET_KEY,ACCESS_TOKEN_TTL
+from src.helper.user_helper import find_user, create_user, is_valid_token, has_valid_claims, delete_user
+from src.util.mongo import MongoClient
+from src.util.redis import Redis
+
+app = Flask(__name__)
+
+# mongo db connection to connect to db
+mongo = MongoClient(app).get_connection()
+roles_cache = Redis(host='redis', port=6379, db=0)
 
 def login():
     """ returns the JWT token if the login is successfull """
@@ -33,9 +42,27 @@ def login():
         # return HTTP status 201 for un authorized user
         return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
 
-def get_user():
+def get_user(name):
     """ gets the user with the given name """
-    return {}
+    # get the base url from the request
+    request_url = "/"+ str(request.url.split("/")[3])
+    # get the claims from the user
+    users = mongo.db.users
+    user = users.find_one({'name':str(name)})
+    roles = user["roles"]
+    if roles is not None and is_valid_token(request,name):
+        for role in roles:
+        # get the role from the roles cache
+            permissions = ast.literal_eval(roles_cache.get(role))
+            for permission in permissions:
+                if has_valid_claims(permission,request_url,request.method):
+                    logger.info('getting information for user %s' , name)
+                    return find_user(name)
+                    break;
+    else:
+        # return HTTP status 201 for un authorized user
+        return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
+    return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
 
 def update_user():
     """ updates the user if the current user(authenticated user) has permissions """
