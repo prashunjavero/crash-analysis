@@ -48,17 +48,9 @@ def get_user(name):
     """ gets the user with the given name """
     # get the base url from the request
     request_url = "/"+ str(request.url.split("/")[3])
-    # get the claims from the user
-    users = mongo.db.users
+    # check if token is valid
     if is_valid_token(request,name):
-        for role in roles:
-        # get the role from the roles cache
-            permissions = ast.literal_eval(roles_cache.get(role))
-            for permission in permissions:
-                if has_valid_claims(permission,request_url,request.method):
-                    logger.info('getting information for user %s' , name)
-                    return find_user(name)
-                    break;
+        return find_user(name)
     return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
 
 def update_user(authenticated_user):
