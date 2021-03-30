@@ -18,6 +18,8 @@ app = Flask(__name__)
 
 # mongo db connection to connect to db
 mongo = MongoClient(app).get_connection()
+
+#todo:remove the hard coding
 roles_cache = Redis(host='redis', port=6379, db=0)
 
 def login():
@@ -49,6 +51,8 @@ def get_user(name):
     # get the claims from the user
     users = mongo.db.users
     user = users.find_one({'name':str(name)})
+    if user is None:
+        return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
     roles = user["roles"]
     if user is not None and is_valid_token(request,name):
         for role in roles:
@@ -60,10 +64,6 @@ def get_user(name):
                     return find_user(name)
                     break;
     return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
-    else:
-        # return HTTP status 201 for un authorized user
-        return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
-    return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
 
 def update_user(authenticated_user):
     """ updates the user if the current user(authenticated user) has permissions """
@@ -73,6 +73,8 @@ def update_user(authenticated_user):
     # get the claims from the user
     users = mongo.db.users
     user = users.find_one({'name':str(authenticated_user)})
+    if user is None:
+        return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
     roles = user["roles"]
     if user is not None and is_valid_token(request,authenticated_user):
         for role in roles:
@@ -83,10 +85,8 @@ def update_user(authenticated_user):
                     logger.info('updating user %s for user %s' ,body, authenticated_user)
                     return update_existing_user(body)
                     break;
-    else:
-        # return HTTP status 201 for un authorized user
-        return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
-    return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
+    return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
+
 
 def create_user(authenticated_user):
     """ creates the user if the current user(authenticated user) has permissions """
@@ -96,6 +96,8 @@ def create_user(authenticated_user):
     # get the claims from the user
     users = mongo.db.users
     user = users.find_one({'name':str(authenticated_user)})
+    if user is None:
+        return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
     roles = user["roles"]
     if user is not None and is_valid_token(request,authenticated_user):
         for role in roles:
@@ -107,10 +109,6 @@ def create_user(authenticated_user):
                     return create_new_user(body)
                     break;
     return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
-    else:
-        # return HTTP status 201 for un authorized user
-        return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
-    return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
 
 
 def delete_user(name,authenticated_user):
@@ -120,6 +118,8 @@ def delete_user(name,authenticated_user):
     # get the claims from the user
     users = mongo.db.users
     user = users.find_one({'name':str(authenticated_user)})
+    if user is None:
+        return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
     roles = user["roles"]
     if user is not None and is_valid_token(request,authenticated_user):
         for role in roles:
@@ -131,7 +131,3 @@ def delete_user(name,authenticated_user):
                     return delete_existing_user(name)
                     break;
     return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
-    else:
-        # return HTTP status 201 for un authorized user
-        return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
-    return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404

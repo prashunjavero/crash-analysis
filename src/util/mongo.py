@@ -31,6 +31,7 @@ class MongoClient(metaclass=Singleton):
         """
         try:
             logger.info('connecting to mogodb.. ')
+            # todo: remove the hard coding 
             self.app.config['MONGO_DBNAME'] = 'db'
             self.app.config["MONGO_URI"] = 'mongodb://mongo:27017/db'
             mongo = PyMongo(self.app)
