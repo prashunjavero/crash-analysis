@@ -1,0 +1,42 @@
+version: '3.6'
+services:
+  redis:
+    image: "redis:alpine"
+    hostname: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    entrypoint: redis-server --appendonly yes
+    networks:
+      - api
+    restart: always
+  mongo:
+    image: mongo:latest
+    hostname: "mongo"
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+      - mongo-configdb:/data/configdb
+    networks:
+      - api
+  app:
+    build: .
+    hostname: apps
+    volumes:
+      - code:/code
+    ports:
+      - "8000:8000"
+    networks:
+      - api
+    links:
+      - redis
+      - mongo
+networks:
+  api:
+volumes:
+  redis_data:
+  code:
+  mongodb_data_container:
+  mongo-configdb:

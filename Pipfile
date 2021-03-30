@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+redis = "*"
+pyyaml = "*"
+datetime = "*"
+pyjwt = "*"
+pep8 = "*"
+pylint = "*"
+wrapt = "*"
+pymongo = "*"
+flask-pymongo = "*"
+
+[requires]
+python_version = "3.7"

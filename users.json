@@ -1,0 +1,5 @@
+{ "users" : 
+    [  
+        {"name":"admin_user","address":"dummy", "password":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9", "email":"dummy@outlook.com" , "roles" : ["admin"]}
+   ]
+}
