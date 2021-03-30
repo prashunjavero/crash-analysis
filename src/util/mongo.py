@@ -1,4 +1,4 @@
-# pylint: disable=locally-disabled, multiple-statements, fixme, line-too-long, import-error
+# pylint: disable=locally-disabled, multiple-statements, fixme, line-too-long, import-error, too-few-public-methods)
 """ Mongo client class. """
 from flask import jsonify
 from flask_pymongo import PyMongo
@@ -31,7 +31,7 @@ class MongoClient(metaclass=Singleton):
         """
         try:
             logger.info('connecting to mogodb.. ')
-            # todo: remove the hard coding 
+            # todo: remove the hard coding
             self.app.config['MONGO_DBNAME'] = 'db'
             self.app.config["MONGO_URI"] = 'mongodb://mongo:27017/db'
             mongo = PyMongo(self.app)

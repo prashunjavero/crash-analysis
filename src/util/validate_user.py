@@ -1,4 +1,4 @@
-# pylint: disable=fixme, no-else-return, no-member ,import-error, line-too-long
+# pylint: disable=fixme, no-else-return, no-member ,import-error, line-too-long, too-few-public-methods
 ''' validates the user based  on password and email from database'''
 from flask import Flask,jsonify
 from src.util.mongo import MongoClient

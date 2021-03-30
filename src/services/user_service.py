@@ -1,3 +1,4 @@
+# pylint: disable=locally-disabled, multiple-statements, fixme, line-too-long, import-error, no-else-return
 """ service to handle user CRUD operations"""
 from datetime import datetime, timedelta
 import ast
@@ -46,8 +47,6 @@ def login():
 
 def get_user(name):
     """ gets the user with the given name """
-    # get the base url from the request
-    request_url = "/"+ str(request.url.split("/")[3])
     # check if token is valid
     if is_valid_token(request,name):
         return find_user(name)
@@ -72,7 +71,7 @@ def update_user(authenticated_user):
                 if has_valid_claims(permission,request_url,request.method):
                     logger.info('updating user %s for user %s' ,body, authenticated_user)
                     return update_existing_user(body)
-                    break;
+                break
     return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
 
 
@@ -95,7 +94,7 @@ def create_user(authenticated_user):
                 if has_valid_claims(permission,request_url,request.method):
                     logger.info('creating user %s for user %s' ,body, authenticated_user)
                     return create_new_user(body)
-                    break;
+            break
     return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
 
 
@@ -117,5 +116,5 @@ def delete_user(name,authenticated_user):
                 if has_valid_claims(permission,request_url,request.method):
                     logger.info('deleting user %s for user %s' ,name, authenticated_user)
                     return delete_existing_user(name)
-                    break;
+            break
     return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201

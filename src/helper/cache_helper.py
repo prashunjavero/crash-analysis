@@ -42,7 +42,7 @@ def set_token(user, access_token, refresh_token ):
             token_cache.delete("refresh_token_" + str(user.name))
             token_cache.set("access_token_" + str(user.name),str({"access_token": access_token} ),ACCESS_TOKEN_TTL)
             token_cache.set("refresh_token_" + str(user.name),str({"refresh_token": refresh_token }),REFRESH_TOKEN_TTL)
-        logger.info(token_cache.get("access_token_" + str(user.name)))
+        return None
     except RuntimeError as err:
         logger.error(str(err))
         return jsonify({"status" : 500 , "message": str(err)}) , 500
