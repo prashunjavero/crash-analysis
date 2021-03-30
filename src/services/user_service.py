@@ -10,7 +10,7 @@ from src.util.logger import logger
 from src.util.validate_user import UserValidator
 from src.helper.cache_helper import set_token,auth_response
 from src.helper.cache_helper import ACCESS_TOKEN_SECRET_KEY,REFRESH_TOKEN_SECRET_KEY,ACCESS_TOKEN_TTL
-from src.helper.user_helper import find_user, create_user, is_valid_token, has_valid_claims, delete_user
+from src.helper.user_helper import find_user, create_new_user, is_valid_token, has_valid_claims, delete_user, update_existing_user
 from src.util.mongo import MongoClient
 from src.util.redis import Redis
 
@@ -64,13 +64,52 @@ def get_user(name):
         return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
     return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
 
-def update_user():
+def update_user(authenticated_user):
+    body  = request.json
     """ updates the user if the current user(authenticated user) has permissions """
-    return {}
+    # get the base url from the request
+    request_url = "/"+ str(request.url.split("/")[3])
+    # get the claims from the user
+    users = mongo.db.users
+    user = users.find_one({'name':str(authenticated_user)})
+    roles = user["roles"]
+    if user is not None and is_valid_token(request,authenticated_user):
+        for role in roles:
+        # get the role from the roles cache
+            permissions = ast.literal_eval(roles_cache.get(role))
+            for permission in permissions:
+                if has_valid_claims(permission,request_url,request.method):
+                    logger.info('updating user %s for user %s' ,body, authenticated_user)
+                    return update_existing_user(body)
+                    break;
+    else:
+        # return HTTP status 201 for un authorized user
+        return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
+    return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
 
-def create_user():
+def create_user(authenticated_user):
+    body  = request.json
     """ creates the user if the current user(authenticated user) has permissions """
-    return {}
+    # get the base url from the request
+    request_url = "/"+ str(request.url.split("/")[3])
+    # get the claims from the user
+    users = mongo.db.users
+    user = users.find_one({'name':str(authenticated_user)})
+    roles = user["roles"]
+    if user is not None and is_valid_token(request,authenticated_user):
+        for role in roles:
+        # get the role from the roles cache
+            permissions = ast.literal_eval(roles_cache.get(role))
+            for permission in permissions:
+                if has_valid_claims(permission,request_url,request.method):
+                    logger.info('creating user %s for user %s' ,body, authenticated_user)
+                    return create_new_user(body)
+                    break;
+    else:
+        # return HTTP status 201 for un authorized user
+        return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
+    return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
+
 
 def delete_user():
     """ deletes the user if the current user(authenticated user) has permissions """

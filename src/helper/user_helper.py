@@ -6,7 +6,7 @@ from src.util.mongo import MongoClient
 from src.helper.cache_helper import get_token_cache
 from src.util.logger import logger
 
-app = Flask("abc")
+app = Flask(__name__)
 mongo = MongoClient(app).get_connection()
 
 token_cache = get_token_cache()
@@ -39,7 +39,7 @@ def has_valid_claims(claim,request_url,method):
     # checks that the user has claim to access the api
     return bool(claim['baseUrl'] == request_url and claim['method'].index(method) != -1 )
 
-def create_user(user):
+def create_new_user(user):
     """ creates the user """
     try:
         users = mongo.db.users
@@ -55,7 +55,7 @@ def create_user(user):
         logger.error(str(err))
         return jsonify({"status" : 500 , "message": str(err)}) , 500
 
-def update_user(user):
+def update_existing_user(user):
     """ creates the user """
     try:
         users = mongo.db.users
