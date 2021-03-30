@@ -104,7 +104,7 @@ def delete_existing_user(name):
         logger.info(db_user)
         if db_user is None :
             logger.error('deleted user with name %s', name)
-            return jsonify({"status" : 500 , "message": "user  deleted"}) , 200
+            return jsonify({"status" : 200 , "message": "user  deleted"}) , 200
         else :
             logger.info('can not delete user with name %s', name)
             return jsonify({"status" : 200 , "message": "user not deleted"}) , 500
