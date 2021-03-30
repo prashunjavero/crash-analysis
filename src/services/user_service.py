@@ -50,7 +50,7 @@ def get_user(name):
     users = mongo.db.users
     user = users.find_one({'name':str(name)})
     roles = user["roles"]
-    if roles is not None and is_valid_token(request,name):
+    if user is not None and is_valid_token(request,name):
         for role in roles:
         # get the role from the roles cache
             permissions = ast.literal_eval(roles_cache.get(role))
@@ -59,6 +59,7 @@ def get_user(name):
                     logger.info('getting information for user %s' , name)
                     return find_user(name)
                     break;
+    return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
     else:
         # return HTTP status 201 for un authorized user
         return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
@@ -105,6 +106,7 @@ def create_user(authenticated_user):
                     logger.info('creating user %s for user %s' ,body, authenticated_user)
                     return create_new_user(body)
                     break;
+    return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
     else:
         # return HTTP status 201 for un authorized user
         return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
@@ -128,6 +130,7 @@ def delete_user(name,authenticated_user):
                     logger.info('deleting user %s for user %s' ,name, authenticated_user)
                     return delete_existing_user(name)
                     break;
+    return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
     else:
         # return HTTP status 201 for un authorized user
         return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
