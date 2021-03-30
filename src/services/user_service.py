@@ -50,11 +50,7 @@ def get_user(name):
     request_url = "/"+ str(request.url.split("/")[3])
     # get the claims from the user
     users = mongo.db.users
-    user = users.find_one({'name':str(name)})
-    if user is None:
-        return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
-    roles = user["roles"]
-    if user is not None and is_valid_token(request,name):
+    if is_valid_token(request,name):
         for role in roles:
         # get the role from the roles cache
             permissions = ast.literal_eval(roles_cache.get(role))
