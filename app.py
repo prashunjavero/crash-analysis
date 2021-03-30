@@ -4,10 +4,12 @@ from flask import Flask
 from src.util.logger import logger
 from src.util.redis import Redis
 from src.util.mongo import MongoClient
-
+from src.util.config_parser import get_config
 from src.api.user_api import user_bp
 
-roles_cache = Redis(host='redis', port=6379, db=0)
+config = get_config()
+#todo:remove the hard coding
+roles_cache = Redis(host=config['redis']['host'], port=config['redis']['port'], db=config['redis']['roles_db'])
 
 app = Flask(__name__)
 PORT = 8000

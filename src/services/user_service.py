@@ -10,6 +10,7 @@ from src.entities.user import User
 from src.util.logger import logger
 from src.util.validate_user import UserValidator
 from src.helper.cache_helper import set_token,auth_response
+from src.util.config_parser import get_config
 from src.helper.cache_helper import ACCESS_TOKEN_SECRET_KEY,REFRESH_TOKEN_SECRET_KEY,ACCESS_TOKEN_TTL
 from src.helper.user_helper import find_user, create_new_user, is_valid_token, has_valid_claims, delete_existing_user, update_existing_user
 from src.util.mongo import MongoClient
@@ -19,9 +20,9 @@ app = Flask(__name__)
 
 # mongo db connection to connect to db
 mongo = MongoClient(app).get_connection()
-
+config = get_config()
 #todo:remove the hard coding
-roles_cache = Redis(host='redis', port=6379, db=0)
+roles_cache = Redis(host=config['redis']['host'], port=config['redis']['port'], db=config['redis']['roles_db'])
 
 def login():
     """ returns the JWT token if the login is successfull """

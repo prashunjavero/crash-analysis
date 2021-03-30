@@ -3,7 +3,9 @@
 from flask import jsonify
 from flask_pymongo import PyMongo
 from src.util.logger import logger
+from src.util.config_parser import get_config
 
+config = get_config()
 class Singleton(type):
     """
     Define an Instance operation that lets clients access its unique
@@ -32,8 +34,8 @@ class MongoClient(metaclass=Singleton):
         try:
             logger.info('connecting to mogodb.. ')
             # todo: remove the hard coding
-            self.app.config['MONGO_DBNAME'] = 'db'
-            self.app.config["MONGO_URI"] = 'mongodb://mongo:27017/db'
+            self.app.config['MONGO_DBNAME'] = config['mongo']['default_db']
+            self.app.config["MONGO_URI"] = config['mongo']['mongo_uri']
             mongo = PyMongo(self.app)
             return mongo
         except ConnectionError as err:
