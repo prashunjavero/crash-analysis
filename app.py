@@ -6,7 +6,6 @@ from src.util.redis import Redis
 from src.util.mongo import MongoClient
 
 from src.api.user_api import user_bp
-from src.api.role_api import roles_bp
 
 roles_cache = Redis(host='redis', port=6379, db=0)
 
@@ -52,6 +51,5 @@ if __name__ == '__main__':
     seed_roles()
     seed_users()
     app.register_blueprint(user_bp)
-    app.register_blueprint(roles_bp)
     app.run(host='0.0.0.0', port=PORT)
     

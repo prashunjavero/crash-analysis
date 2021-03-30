@@ -93,7 +93,7 @@ def find_user(name):
         logger.error(str(err))
         return jsonify({"status" : 500 , "message": str(err)}) , 500
 
-def delete_user(name):
+def delete_existing_user(name):
     """ delete user with given name """
     try:
         users = mongo.db.users
