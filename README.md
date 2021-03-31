@@ -75,6 +75,25 @@ single command to start the app server and the redis and mongodb database
 2. in order to insert data into database iti is ne essary that the user logs in and gets the access token <br>
 3. once the token is generated it is set in the headder as the authorization token <br>
 4. please note that you will not be able to get the API to work without the authentication token <br>
+5. currently there is only one user seeded into the database but more users can be added using the create user endpoint <br>
+
+#### login user 
+
+```
+enpoint : http://0.0.0.0:8000/login
+method: POST 
+
+body: 
+
+{
+    "name": "admin_user",
+    "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
+    "email": "dummy@outlook.com",
+    "roles":["admin"]
+}
+
+```
+
 
 
 
