@@ -16,6 +16,7 @@ REFRESH_TOKEN_TTL = config['jwt']['refresh_token']['refresh_token_ttl']
 # connect to redis cache using the config
 logger.info('connect to the token and claims cache  .... ')
 token_cache = Redis(host=config['redis']['host'] , port=config['redis']['port'] , db = config['redis']['token_db'])
+claims_cache = Redis(host=config['redis']['host'] , port=config['redis']['port'] , db = config['redis']['claims_db'])
 
 def get_token_cache():
     ''' module to get token cache '''
