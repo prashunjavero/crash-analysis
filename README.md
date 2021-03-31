@@ -82,7 +82,7 @@ single command to start the app server and the redis and mongodb database
 
 ###### enpoint : http://0.0.0.0:8000/login  <br>
 ###### method: POST   <br>
-body:
+###### body:
 
 ```json
 {
@@ -118,14 +118,50 @@ eg response <br>
 
 as previously noted please setup the authorization token in the header as a bearer token 
 
-###### heders: <br>
+###### headers: <br>
 
-eg headers 
 ```
 "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJhZG1pbl91c2VyIiwiZXhwIjoxNjE3NDEzMzk2LCJzY29wZSI6WyJhZG1pbiJdfQ.KFKqwzjniIiNGArW4-2qlv1s0AMWID7TkJTPZJSP8kU"
 
 "Content-Type" : " application/json"
 
+```
+###### endpoint: <br>
+
+http://0.0.0.0:8000/file/download/admin_user
+
+###### method: POST   <br>
+###### body:
+
+```
+{"endpoint": "https://crashviewer.nhtsa.dot.gov/CrashAPI/FARSData/GetFARSData"}
+```
+
+this should go to the posted endpoint and start loading the data into mongodb in a streaming fashion as a webhook <br>
+on sucessfull completion of the dataload you should get response 
+
+```json 
+{
+   "status" : 200 , 
+   "message": "records inserted successfully"
+}
+```
+
+if the upload fails for any reason you should get response 
+
+```json 
+{
+   "status" : 500 , 
+   "message": "error message returned from code "
+}
+```
+
+if the authentication and or authorizarion  fails for any reason you should get response 
+```json 
+{
+    "message": "unauthorized user",
+    "status": 201
+}
 ```
 
 
