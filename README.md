@@ -105,4 +105,16 @@ eg response <br>
 }
 ```
 
+###### if the user does not exist you should get an authorization error 
+
+```
+{
+    "message": "unauthorized user",
+    "status": 201
+}
+
+```
+
+
+#### download and process file from endpoint
 
