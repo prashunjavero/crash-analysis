@@ -6,9 +6,9 @@ from src.util.redis import Redis
 from src.util.mongo import MongoClient
 from src.util.config_parser import get_config
 from src.api.user_api import user_bp
+from src.api.file_api import file_bp
 
 config = get_config()
-#todo:remove the hard coding
 roles_cache = Redis(host=config['redis']['host'], port=config['redis']['port'], db=config['redis']['roles_db'])
 
 app = Flask(__name__)
@@ -53,5 +53,5 @@ if __name__ == '__main__':
     seed_roles()
     seed_users()
     app.register_blueprint(user_bp)
+    app.register_blueprint(file_bp)
     app.run(host='0.0.0.0', port=PORT)
-    

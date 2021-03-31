@@ -4,7 +4,8 @@
             "name": "admin" ,
             "permissions" : [ 
                 {"api": "user", "baseUrl": "/user" ,"method": ["GET","POST","PUT","DELETE"]},
-                {"api": "permissions", "baseUrl": "/user/permissions" ,"method": ["GET","POST","PUT","DELETE"]}
+                {"api": "permissions", "baseUrl": "/user/permissions" ,"method": ["GET","POST","PUT","DELETE"]},
+                {"api": "files", "baseUrl": "/file" ,"method": ["GET","POST","PUT","DELETE"]}
             ]
         }
    ]

@@ -16,6 +16,8 @@ pylint = "*"
 wrapt = "*"
 pymongo = "*"
 flask-pymongo = "*"
+requests = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"

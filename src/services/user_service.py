@@ -1,7 +1,6 @@
 # pylint: disable=locally-disabled, multiple-statements, fixme, line-too-long, import-error, no-else-return
 """ service to handle user CRUD operations"""
 from datetime import datetime, timedelta
-import ast
 import jwt
 
 from flask import Flask,request, jsonify
@@ -12,7 +11,7 @@ from src.util.validate_user import UserValidator
 from src.helper.cache_helper import set_token,auth_response
 from src.util.config_parser import get_config
 from src.helper.cache_helper import ACCESS_TOKEN_SECRET_KEY,REFRESH_TOKEN_SECRET_KEY,ACCESS_TOKEN_TTL
-from src.helper.user_helper import find_user, create_new_user, is_valid_token, has_valid_claims, delete_existing_user, update_existing_user, has_access
+from src.helper.user_helper import find_user, create_new_user, is_valid_token, delete_existing_user, update_existing_user, has_access
 from src.util.mongo import MongoClient
 
 
@@ -56,7 +55,7 @@ def update_user(authenticated_user):
     body  = request.json
     if has_access(request,authenticated_user):
         logger.info('updating user %s for user %s' ,body, authenticated_user)
-        update_existing_user(body)
+        return update_existing_user(body)
     return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
 
 
