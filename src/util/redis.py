@@ -1,5 +1,5 @@
 # pylint: disable=locally-disabled, multiple-statements, fixme, line-too-long, import-error
-''' module to interact with redis'''
+''' redis client class to handle redis connection'''
 import redis
 from flask import jsonify
 from src.util.logger import logger

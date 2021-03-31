@@ -8,5 +8,5 @@ file_bp = Blueprint('file', __name__)
 
 @file_bp.route("/file/download/<authenticated_user>" , methods = ['POST'])
 def download(authenticated_user):
-    ''' endpoints to download file '''
+    ''' endpoint to download file  deom external uri '''
     return download_file(authenticated_user)

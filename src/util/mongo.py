@@ -1,5 +1,5 @@
 # pylint: disable=locally-disabled, multiple-statements, fixme, line-too-long, import-error, too-few-public-methods)
-""" Mongo client class. """
+""" Mongo client class. to handle mongo connection"""
 from flask import jsonify
 from flask_pymongo import PyMongo
 from src.util.logger import logger

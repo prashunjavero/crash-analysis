@@ -44,7 +44,7 @@ def login():
         return jsonify({'status' : 201 , 'message' : 'unauthorized user'}) ,201
 
 def get_user(name):
-    """ gets the user with the given name """
+    """ gets the user with the given name if the jwt token is valid"""
     # check if token is valid
     if is_valid_token(request,name):
         return find_user(name)
