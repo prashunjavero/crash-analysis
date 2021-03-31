@@ -9,7 +9,7 @@ The code uses venv to run and uses docker and docker compose to setup and requir
 -- install make command on linux/ mac  systems <br/>
 -- github command line tools <br/>
 
-### clone the repository <br/>
+### clone the repository and checkout the code <br/>
 
 1. clone the repository using the below command <br/>
 
@@ -28,3 +28,37 @@ git checkout -b master
 ```
 make env
 ```
+
+this will create a vitual env for you and then enters the shell for you 
+
+4. install all the dependencies that are required by the code 
+```
+make install
+```
+
+this should generate a piplock file for you 
+
+5. auto generate the requirements.txt from the piplock file using 
+
+```
+make lock
+```
+this should auto genearate a requirements.txt file from the piplock file 
+
+6. build the code using 
+
+```
+make build
+```
+
+this will run docker compose and build the <br>
+
+-- application container <br>
+-- redis container<br>
+-- mongodb container <br>
+
+for you . please not that the redis and mongodb databases are not installed in cluster mode <br>
+so the ssize of the data that you can work with is limited by the size of the attached docker volume 
+
+
+
