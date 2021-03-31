@@ -84,7 +84,7 @@ enpoint : http://0.0.0.0:8000/login
 method: POST 
 body:
 
-``` 
+```json
 {
     "name": "admin_user",
     "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
@@ -96,7 +96,7 @@ body:
 
 eg response <br>
 
-```
+```json
 {
     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJhZG1pbl91c2VyIiwiZXhwIjoxNjE3NDEzMzk2LCJzY29wZSI6WyJhZG1pbiJdfQ.KFKqwzjniIiNGArW4-2qlv1s0AMWID7TkJTPZJSP8kU",
     "message": "Login Successful",
