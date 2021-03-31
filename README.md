@@ -80,8 +80,8 @@ single command to start the app server and the redis and mongodb database
 
 #### login user 
 
-enpoint : http://0.0.0.0:8000/login
-method: POST 
+###### enpoint : http://0.0.0.0:8000/login  <br>
+###### method: POST   <br>
 body:
 
 ```json
