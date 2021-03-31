@@ -116,7 +116,10 @@ eg response <br>
 
 #### 2. download and process file from endpoint
 
-as previously noted please setup the authorization token in the header as a bearer token 
+1. as previously noted please setup the authorization token in the header as a bearer token <br>
+2. the codde used mongodb as a database to store the data as it can stored both structures , semistructured and untructured data </br>
+in our case the data is mostly structured but may be missing fields these are filled with none and mongodb will be able to handle these </br>
+without any extra data validation and cleansing required making the peocess of saving data fairly sinple 
 
 ###### headers: <br>
 
