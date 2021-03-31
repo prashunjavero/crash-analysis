@@ -76,15 +76,15 @@ single command to start the app server and the redis and mongodb database
 3. once the token is generated it is set in the headder as the authorization token <br>
 4. please note that you will not be able to get the API to work without the authentication token <br>
 5. currently there is only one user seeded into the database but more users can be added using the create user endpoint <br>
+6. the roles are used to handle the enpoint authorization and are seeded on server start <br>
 
 #### login user 
 
-```
 enpoint : http://0.0.0.0:8000/login
 method: POST 
+body:
 
-body: 
-
+``` 
 {
     "name": "admin_user",
     "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
@@ -94,6 +94,15 @@ body:
 
 ```
 
+eg response <br>
 
+```
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJhZG1pbl91c2VyIiwiZXhwIjoxNjE3NDEzMzk2LCJzY29wZSI6WyJhZG1pbiJdfQ.KFKqwzjniIiNGArW4-2qlv1s0AMWID7TkJTPZJSP8kU",
+    "message": "Login Successful",
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJhZG1pbl91c2VyIiwiZXhwIjoxNjE3NDEzMzk2LCJzY29wZSI6WyJhZG1pbiJdfQ.T3XvdwmcJBAdXgaJ8PdrWlCci84KuODYkZiAeoX0Lik",
+    "token_type": "Bearer"
+}
+```
 
 
