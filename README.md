@@ -66,7 +66,7 @@ so the size of the data that you can work with is limited by the size of the att
 make deploy
 ```
 
-sinfle command to start the app server and the redis and mongodb database 
+single command to start the app server and the redis and mongodb database 
 
 
 
