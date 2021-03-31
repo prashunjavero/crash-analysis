@@ -58,7 +58,15 @@ this will run docker compose and build the <br>
 -- mongodb container <br>
 
 for you . please not that the redis and mongodb databases are not installed in cluster mode <br>
-so the ssize of the data that you can work with is limited by the size of the attached docker volume 
+so the size of the data that you can work with is limited by the size of the attached docker volume <br>
+
+7. run the code 
+
+```
+make deploy
+```
+
+sinfle command to start the app server and the redis and mongodb database 
 
 
 
