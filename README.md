@@ -69,4 +69,12 @@ make deploy
 single command to start the app server and the redis and mongodb database 
 
 
+### API Endpoints 
+
+1. the API endpoints are sercured using JWT based authentication <br>
+2. in order to insert data into database iti is ne essary that the user logs in and gets the access token <br>
+3. once the token is generated it is set in the headder as the authorization token <br>
+4. please note that you will not be able to get the API to work without the authentication token <br>
+
+
 
