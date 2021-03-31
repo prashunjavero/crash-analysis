@@ -17,6 +17,14 @@ The code uses venv to run and uses docker and docker compose to setup and requir
 git clone https://github.com/prashunjavero/flask-rest-api.git
 ```
 
+2. checkout from master 
 
+```
+git checkout -b master 
+```
 
+3. install the venv with the help of make command 
 
+```
+make env
+```
