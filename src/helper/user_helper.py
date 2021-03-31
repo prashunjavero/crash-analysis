@@ -5,11 +5,16 @@ from flask import Flask,jsonify
 from src.util.mongo import MongoClient
 from src.helper.cache_helper import get_token_cache
 from src.util.logger import logger
+from src.util.config_parser import get_config
+from src.util.redis import Redis
 
 app = Flask(__name__)
 mongo = MongoClient(app).get_connection()
 
+config = get_config()
+
 token_cache = get_token_cache()
+roles_cache = Redis(host=config['redis']['host'], port=config['redis']['port'], db=config['redis']['roles_db'])
 
 def verify_token(token):
     """ verify the token is not none"""
@@ -111,3 +116,23 @@ def delete_existing_user(name):
     except RuntimeError as err:
         logger.error(str(err))
         return jsonify({"status" : 500 , "message": str(err)}) , 500
+
+def has_access(request,authenticated_user):
+    """ checks if the use has access """
+    # get the base url from the request
+    request_url = "/"+ str(request.url.split("/")[3])
+    # get the claims from the user
+    users = mongo.db.users
+    user = users.find_one({'name':str(authenticated_user)})
+    if user is None:
+        return jsonify({'status' : 404 , 'message' : 'no user found'}) , 404
+    roles = user["roles"]
+    if user is not None and is_valid_token(request,authenticated_user):
+        for role in roles:
+        # get the role from the roles cache
+            permissions = ast.literal_eval(roles_cache.get(role))
+            for permission in permissions:
+                if has_valid_claims(permission,request_url,request.method):
+                    return True
+            break
+    return False
