@@ -78,7 +78,7 @@ single command to start the app server and the redis and mongodb database
 5. currently there is only one user seeded into the database but more users can be added using the create user endpoint <br>
 6. the roles are used to handle the enpoint authorization and are seeded on server start <br>
 
-#### login user 
+#### 1. login user 
 
 ###### enpoint : http://0.0.0.0:8000/login  <br>
 ###### method: POST   <br>
@@ -107,14 +107,27 @@ eg response <br>
 
 ###### if the user does not exist you should get an authorization error 
 
-```
+```json 
 {
     "message": "unauthorized user",
     "status": 201
 }
+```
+
+#### 2. download and process file from endpoint
+
+as previously noted please setup the authorization token in the header as a bearer token 
+
+###### heders: <br>
+
+eg headers 
+```
+"Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX25hbWUiOiJhZG1pbl91c2VyIiwiZXhwIjoxNjE3NDEzMzk2LCJzY29wZSI6WyJhZG1pbiJdfQ.KFKqwzjniIiNGArW4-2qlv1s0AMWID7TkJTPZJSP8kU"
+
+"Content-Type" : " application/json"
 
 ```
 
 
-#### download and process file from endpoint
+
 
